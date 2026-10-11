@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using AuthDemo.Api.Models;
 
-namespace AuthDemo.Api.Data;
-
-public class AppDbContext : DbContext
+namespace AuthDemo.Api.Data
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<User> Users => Set<User>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<TaskItem> Tasks => Set<TaskItem>();
+    }
 }
