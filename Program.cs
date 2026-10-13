@@ -15,8 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Dang ky Token Service
+// 2. Dang ky Token Service & Task Service
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 // 3. Cau hinh JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -70,11 +71,12 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Luôn bật Swagger ở mọi môi trường để không bị lỗi 404
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthDemo API v1");
+});
 
 app.UseHttpsRedirection();
 
