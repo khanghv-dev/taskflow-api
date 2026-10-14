@@ -1,31 +1,32 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AuthDemo.Api.Models;
-
-/// <summary>
-/// Entity đại diện cho một công việc (Task).
-/// Được đặt tên TaskItem để tránh xung đột với System.Threading.Tasks.Task.
-/// </summary>
-public class TaskItem
+namespace AuthDemo.Api.Models
 {
-    public int Id { get; set; }
+    public class TaskItem
+    {
+        [Key]
+        public int Id { get; set; }
 
-    [Required]
-    [StringLength(200)]
-    public string Title { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(200)]
+        public string Title { get; set; } = string.Empty;
 
-    public string? Description { get; set; }
+        public string? Description { get; set; }
 
-    public bool IsCompleted { get; set; } = false;
+        public DateTime Deadline { get; set; }
 
-    public DateTime? Deadline { get; set; }
+        [MaxLength(50)]
+        public string Status { get; set; } = "Pending";
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Required]
+        public Guid UserId { get; set; } // Khớp với Guid của User
 
-    // Khóa ngoại liên kết tới Category
-    public int CategoryId { get; set; }
+        // Khóa ngoại liên kết tới Category (cho phép null)
+        public int? CategoryId { get; set; }
 
-    [ForeignKey("CategoryId")]
-    public Category? Category { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
+    }
 }
