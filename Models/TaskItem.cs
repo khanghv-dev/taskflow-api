@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuthDemo.Api.Models
 {
@@ -22,6 +23,10 @@ namespace AuthDemo.Api.Models
         [Required]
         public Guid UserId { get; set; } // Khớp với Guid của User
 
+        // Khóa ngoại liên kết tới Category (cho phép null)
         public int? CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
     }
 }

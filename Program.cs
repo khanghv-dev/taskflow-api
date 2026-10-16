@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using AuthDemo.Api.Data;
+using AuthDemo.Api.Middlewares;
 using AuthDemo.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,6 +78,9 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthDemo API v1");
 });
+
+// Global Exception Middleware – bắt mọi lỗi tập trung
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
